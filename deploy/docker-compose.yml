@@ -1,0 +1,31 @@
+# 需要启动的容器服务
+services:
+
+  # mysql服务的相关配置
+  mysql:
+    # 使用的哪个docker镜像，即使用哪个版本
+    image: mysql:8.0
+    # 容器名称
+    container_name: taskflow-mysql
+    # 环境变量：初始化信息
+    environment:
+      # root用户密码
+      MYSQL_ROOT_PASSWORD: root
+      # 启动时,自动创建数据库：taskflow
+      MYSQL_DATABASE: taskflow
+      # 创建普通用户
+      MYSQL_USER: taskflow
+      # 用户密码
+      MYSQL_PASSWORD: taskflow
+    # 端口映射
+    ports:
+      - "13306:3306"
+    # 数据持久化（我们实习学习到的挂载）
+    # 把MySQL数据目录：/var/lib/mysql 挂载到Docker volume：mysql_data
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+# volumes声明
+# 我要创建一个 Docker volume
+volumes:
+  mysql_data:
